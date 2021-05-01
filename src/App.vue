@@ -1,19 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <ul>
+      <li v-for="person in dataUsers" :key="person.name">
+        {{ person.name }}
+        {{ person.phone }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import dataUsers from "@/api/index";
 
 export default Vue.extend({
   name: "App",
-  components: {
-    HelloWorld,
-  },
+  data: () => ({
+    dataUsers,
+  }),
 });
 </script>
 
