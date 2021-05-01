@@ -1,0 +1,49 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  list-style: none;
+  border: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+*:focus-visible,
+button:focus {
+  box-shadow: 0 0 1px 2px $light-blue;
+  outline: none;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  background-color: $grey;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Merriweather", serif;
+}
+
+a {
+  color: $light-blue;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button:hover {
+  cursor: pointer;
+}
