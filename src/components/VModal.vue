@@ -1,7 +1,9 @@
 <template>
   <transition name="fade-transition">
-    <div v-if="isOpen" class="modal-overlay" @click.stop="close">
-      <div class="modal-wrapper" @click.stop>
+    <div v-if="isOpen">
+      <div class="modal-overlay" @click.stop="close"></div>
+
+      <div class="modal" @click.stop>
         <header>
           <h2>{{ title }}</h2>
 
@@ -55,8 +57,9 @@ export default {
   user-select: none;
 }
 
-.modal-wrapper {
+.modal {
   position: fixed;
+  z-index: 15;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -91,7 +94,7 @@ export default {
 
     &:hover {
       cursor: pointer;
-      background-color: $grey;
+      background-color: darken($grey, 5%);
     }
 
     .times-icon {
