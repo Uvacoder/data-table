@@ -19,12 +19,18 @@
           <td>{{ user.name }}</td>
           <td>{{ user.phone }}</td>
           <td>
-            <VButton variant="green">Edit</VButton>
+            <VButton variant="green" @click="openModalUpdateUser(user)">
+              Edit
+            </VButton>
             <VButton variant="red" @click="removeUser(user)">Delete</VButton>
           </td>
         </tr>
       </template>
     </VTable>
+
+    <VModal title="Update user" ref="modalUpdateUser">
+      <p>modal user</p>
+    </VModal>
   </div>
 </template>
 
@@ -33,18 +39,27 @@ import Vue from "vue";
 import dataUsers from "@/api/index";
 import VTable from "@/components/ui/VTable.vue";
 import VButton from "@/components/ui/VButton.vue";
+import VModal from "@/components/ui/VModal.vue";
 import { IUser } from "./types";
 
 export default Vue.extend({
   name: "App",
-  components: { VTable, VButton },
+  components: { VTable, VButton, VModal },
   data: () => ({
     dataUsers,
+    userFrom: {
+      name: "",
+      phone: "",
+    },
   }),
 
   methods: {
-    createUser(newUser: IUser) {
-      this.dataUsers.push({ ...newUser });
+    openModalUpdateUser(user: IUser) {
+      this.$refs.modalUpdateUser.open();
+      this.userFrom = { ...user };
+    },
+    addUser(userToAdd: IUser) {
+      this.dataUsers.push({ ...userToAdd });
     },
     updateUser(userToUpdate: IUser) {
       const index = this.dataUsers.findIndex(
