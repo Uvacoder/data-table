@@ -18,10 +18,8 @@
   </transition>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
+<script>
+export default {
   name: "VModal",
   props: {
     title: { type: String, default: "" },
@@ -38,7 +36,7 @@ export default Vue.extend({
       this.isOpen = false;
     },
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>

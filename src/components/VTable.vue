@@ -20,20 +20,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-
-interface ITheadCols {
-  text: string;
-  width: string | number;
-}
-
-export default Vue.extend({
+<script>
+export default {
   name: "VTable",
   props: {
-    theadCols: { type: Array as () => ITheadCols[], required: true },
+    theadCols: { type: Array, required: true },
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>

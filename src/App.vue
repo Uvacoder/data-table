@@ -34,34 +34,32 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script>
 import dataUsers from "@/api/index";
-import VTable from "@/components/ui/VTable.vue";
-import VButton from "@/components/ui/VButton.vue";
-import VModal from "@/components/ui/VModal.vue";
-import { IUser } from "./types";
+import VTable from "@/components/VTable.vue";
+import VButton from "@/components/VButton.vue";
+import VModal from "@/components/VModal.vue";
 
-export default Vue.extend({
+export default {
   name: "App",
   components: { VTable, VButton, VModal },
   data: () => ({
     dataUsers,
-    userFrom: {
+    userForm: {
       name: "",
       phone: "",
     },
   }),
 
   methods: {
-    openModalUpdateUser(user: IUser) {
+    openModalUpdateUser(user) {
       this.$refs.modalUpdateUser.open();
-      this.userFrom = { ...user };
+      this.userForm = { ...user };
     },
-    addUser(userToAdd: IUser) {
+    addUser(userToAdd) {
       this.dataUsers.push({ ...userToAdd });
     },
-    updateUser(userToUpdate: IUser) {
+    updateUser(userToUpdate) {
       const index = this.dataUsers.findIndex(
         (user) => user.id === userToUpdate.id
       );
@@ -69,13 +67,13 @@ export default Vue.extend({
         this.dataUsers[index] = { ...userToUpdate };
       }
     },
-    removeUser(userToDelete: IUser) {
+    removeUser(userToDelete) {
       this.dataUsers = this.dataUsers.filter(
         (user) => user.id !== userToDelete.id
       );
     },
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>
