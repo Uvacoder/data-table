@@ -11,9 +11,13 @@
       ]"
     >
       <template #tbody>
-        <tr v-for="person in dataUsers" :key="person.name">
-          <td>{{ person.name }}</td>
-          <td>{{ person.phone }}</td>
+        <tr v-if="!dataUsers.length">
+          <td colspan="3">No users found</td>
+        </tr>
+
+        <tr v-for="user in dataUsers" :key="user.id">
+          <td>{{ user.name }}</td>
+          <td>{{ user.phone }}</td>
           <td>
             <button>Edit</button>
             <button>Delete</button>
