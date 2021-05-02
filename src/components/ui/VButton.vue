@@ -4,14 +4,16 @@
   </button>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
   name: "VButton",
   props: {
     type: { type: String, default: "button" },
     variant: { type: String, default: "" },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
