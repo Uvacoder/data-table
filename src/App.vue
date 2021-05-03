@@ -2,34 +2,49 @@
   <div class="page-wrapper">
     <h1 class="page-title">Users List</h1>
 
-    <VTable
-      class="v-table"
-      :theadCols="[
-        { text: 'Name', width: 200 },
-        { text: 'Phone', width: 200 },
-        { text: 'Actions', align: 'center', width: 100 },
-      ]"
-    >
-      <template #tbody>
-        <tr v-if="!dataUsers.length">
-          <td colspan="3">No users found</td>
-        </tr>
+    <main>
+      <form @submit.prevent="addUser(newUserForm)" class="form-add">
+        <VInput
+          label="Name"
+          id="name"
+          v-model="newUserForm.name"
+          placeholder="Ex: Lucas S."
+        />
+        <VInput
+          label="Phone"
+          id="phone"
+          placeholder="Ex: (##) #####-####"
+          v-model="newUserForm.phone"
+        />
 
-        <tr v-for="user in dataUsers" :key="user.id">
-          <td>{{ user.name }}</td>
-          <td>{{ user.phone }}</td>
-          <td class="td-actions">
-            <VButton variant="green" @click="openModalUpdateUser(user)">
-              Edit
-            </VButton>
-            <VButton variant="red" @click="removeUser(user)">Delete</VButton>
-          </td>
-        </tr>
-      </template>
-    </VTable>
+        <div class="btn-group">
+          <VButton type="submit">Add</VButton>
+          <VButton variant="gray" @click="clearNewUserForm">Clear</VButton>
+        </div>
+      </form>
+
+      <VTable class="v-table" :theadCols="theadCols">
+        <template #tbody>
+          <tr v-if="!dataUsers.length">
+            <td colspan="3">No users found</td>
+          </tr>
+
+          <tr v-for="user in dataUsers" :key="user.id">
+            <td>{{ user.name }}</td>
+            <td>{{ user.phone }}</td>
+            <td class="td-actions">
+              <VButton variant="green" @click="openModalUpdateUser(user)">
+                Edit
+              </VButton>
+              <VButton variant="red" @click="removeUser(user)">Delete</VButton>
+            </td>
+          </tr>
+        </template>
+      </VTable>
+    </main>
 
     <VModal ref="modalUpdateUser" title="Edit user">
-      <form @submit.prevent="submitForm" class="modal-form">
+      <form @submit.prevent="submitForm" class="form-edit">
         <VInput label="Name" id="name" v-model="userForm.name" />
         <VInput label="Phone" id="phone" v-model="userForm.phone" />
 
@@ -54,10 +69,13 @@ export default {
   components: { VTable, VButton, VModal, VInput },
   data: () => ({
     dataUsers,
-    userForm: {
-      name: "",
-      phone: "",
-    },
+    newUserForm: { name: "", phone: "" },
+    userForm: { name: "", phone: "" },
+    theadCols: [
+      { text: "Name", width: 200 },
+      { text: "Phone", width: 200 },
+      { text: "Actions", align: "center", width: 100 },
+    ],
   }),
 
   methods: {
@@ -69,12 +87,16 @@ export default {
       try {
         this.editUser(this.userForm);
         this.$refs.modalUpdateUser.close();
+        this.editUserForm = { name: "", phone: "" };
       } catch (error) {
         alert(error.message);
       }
     },
+    clearNewUserForm() {
+      this.newUserForm = { name: "", phone: "" };
+    },
     addUser(userToAdd) {
-      this.dataUsers.push({ ...userToAdd });
+      this.dataUsers.unshift({ ...userToAdd, id: this.dataUsers.length });
     },
     editUser(userToEdit) {
       const index = this.dataUsers.findIndex(
@@ -99,18 +121,32 @@ export default {
 @import "@/assets/styles/_variables";
 
 .page-wrapper {
-  text-align: center;
-
   .page-title {
     padding: 0.5rem 0;
     border-bottom: $grey 1px solid;
     margin-bottom: 1rem;
   }
 
-  .v-table {
+  main {
     margin: 0 auto;
     max-width: 800px;
+    padding-bottom: 2rem;
+  }
 
+  .form-add {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+
+    .btn-group {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+  }
+
+  .v-table {
     .td-actions {
       display: flex;
       justify-content: center;
@@ -118,7 +154,7 @@ export default {
     }
   }
 
-  .modal-form {
+  .form-edit {
     display: flex;
     flex-direction: column;
     gap: 1rem;

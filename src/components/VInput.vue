@@ -37,8 +37,8 @@ export default {
 .input-row {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.5rem;
   text-align: start;
+  width: 100%;
 
   label {
     margin-bottom: 0.35rem;
@@ -51,10 +51,9 @@ export default {
     padding: 0.5rem;
     font-size: 1rem;
     background-color: #fff;
-    box-shadow: 0 0 3px 1px #acacacc7;
     border: solid 1px $dark;
     border-radius: 4px;
-    height: 2.4rem;
+    height: 2rem;
 
     &:focus-visible {
       border-color: $light-blue;
