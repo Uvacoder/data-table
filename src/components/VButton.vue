@@ -22,11 +22,11 @@ export default {
   $bg-default: $light-blue;
   $bg-red: #d43d3d;
   $bg-green: #4caf50;
+  $bg-gray: #607d8b;
 
   @include transition(background-color);
   width: max-content;
   padding: 0.3rem 0.75rem;
-  margin: 0 0.3rem;
   background-color: $bg-default;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -74,6 +74,19 @@ export default {
     &:focus-visible {
       background-color: darken($bg-green, 10%);
       outline-color: $bg-green;
+    }
+  }
+
+  &.gray {
+    background-color: $bg-gray;
+
+    &:hover {
+      background-color: darken($bg-gray, 10%);
+    }
+    &:focus,
+    &:focus-visible {
+      background-color: darken($bg-gray, 10%);
+      outline-color: $bg-gray;
     }
   }
 }

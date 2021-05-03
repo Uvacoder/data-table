@@ -1,13 +1,13 @@
 <template>
-  <div id="app">
-    <h1>Users list</h1>
+  <div class="page-wrapper">
+    <h1 class="page-title">Users List</h1>
 
     <VTable
       class="v-table"
       :theadCols="[
         { text: 'Name', width: 200 },
         { text: 'Phone', width: 200 },
-        { text: 'Action', width: 100 },
+        { text: 'Actions', align: 'center', width: 100 },
       ]"
     >
       <template #tbody>
@@ -18,7 +18,7 @@
         <tr v-for="user in dataUsers" :key="user.id">
           <td>{{ user.name }}</td>
           <td>{{ user.phone }}</td>
-          <td>
+          <td class="td-actions">
             <VButton variant="green" @click="openModalUpdateUser(user)">
               Edit
             </VButton>
@@ -28,21 +28,30 @@
       </template>
     </VTable>
 
-    <VModal title="Update user" ref="modalUpdateUser">
-      <p>modal user</p>
+    <VModal ref="modalUpdateUser" title="Edit user">
+      <form @submit.prevent="submitForm" class="modal-form">
+        <VInput label="Name" id="name" v-model="userForm.name" />
+        <VInput label="Phone" id="phone" v-model="userForm.phone" />
+
+        <div class="btn-group">
+          <VButton variant="gray" @click="$refs.modalUpdateUser.close()">
+            Cancel
+          </VButton>
+          <VButton type="submit">Save</VButton>
+        </div>
+      </form>
     </VModal>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
 import dataUsers from "@/api/index";
-import VTable from "@/components/VTable.vue";
-import VButton from "@/components/VButton.vue";
-import VModal from "@/components/VModal.vue";
+import { VTable, VButton, VModal, VInput } from "@/components";
 
 export default {
   name: "App",
-  components: { VTable, VButton, VModal },
+  components: { VTable, VButton, VModal, VInput },
   data: () => ({
     dataUsers,
     userForm: {
@@ -56,15 +65,25 @@ export default {
       this.$refs.modalUpdateUser.open();
       this.userForm = { ...user };
     },
+    submitForm() {
+      try {
+        this.editUser(this.userForm);
+        this.$refs.modalUpdateUser.close();
+      } catch (error) {
+        alert(error.message);
+      }
+    },
     addUser(userToAdd) {
       this.dataUsers.push({ ...userToAdd });
     },
-    updateUser(userToUpdate) {
+    editUser(userToEdit) {
       const index = this.dataUsers.findIndex(
-        (user) => user.id === userToUpdate.id
+        (user) => user.id === userToEdit.id
       );
       if (index !== -1) {
-        this.dataUsers[index] = { ...userToUpdate };
+        Vue.set(this.dataUsers, index, { ...userToEdit });
+      } else {
+        throw new Error("Unable to update, invalid user received");
       }
     },
     removeUser(userToDelete) {
@@ -77,12 +96,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#app {
+@import "@/assets/styles/_variables";
+
+.page-wrapper {
   text-align: center;
+
+  .page-title {
+    padding: 0.5rem 0;
+    border-bottom: $grey 1px solid;
+    margin-bottom: 1rem;
+  }
 
   .v-table {
     margin: 0 auto;
     max-width: 800px;
+
+    .td-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+  }
+
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding: 1rem 0 0 0;
+      border-top: $grey 1px solid;
+    }
   }
 }
 </style>

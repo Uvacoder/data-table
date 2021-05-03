@@ -66,9 +66,9 @@ export default {
   display: flex;
   flex-direction: column;
   min-width: 500px;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   background-color: #fff;
-  border-radius: 0.5rem;
+  border-radius: 4px;
   box-shadow: 0 0 5px 0 #333;
   user-select: text;
 

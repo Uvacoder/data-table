@@ -6,7 +6,7 @@
           <th
             v-for="col in theadCols"
             :key="col.text"
-            :style="{ width: col.width }"
+            :style="{ width: col.width, textAlign: col.align }"
           >
             {{ col.text }}
           </th>
