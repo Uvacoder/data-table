@@ -3,6 +3,7 @@
     <label v-if="label" :for="id" class="label">{{ label }}</label>
     <div class="input-wrapper">
       <input
+        ref="input"
         :id="id"
         type="text"
         :value="value"
@@ -23,6 +24,12 @@ export default {
     label: { type: String, default: "" },
     placeholder: { type: String, default: "" },
     autocomplete: { type: String, default: "off" },
+  },
+
+  methods: {
+    focus() {
+      this.$refs.input.focus();
+    },
   },
 };
 </script>

@@ -33,6 +33,7 @@ export default {
   methods: {
     open() {
       this.isOpen = true;
+      document.activeElement.blur();
     },
     close() {
       this.isOpen = false;
