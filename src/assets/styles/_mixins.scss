@@ -1,3 +1,5 @@
+@import "_variables";
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -6,4 +8,29 @@
 
 @mixin transition($property: all) {
   transition: $property ease 0.3s;
+}
+
+@mixin input-row {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  width: 100%;
+}
+
+@mixin base-input {
+  @include transition;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #fff;
+  border: solid 1px $dark;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  height: 2rem;
+
+  &:focus-visible {
+    border-color: $light-blue;
+    box-shadow: 0 0 3px 1px $light-blue;
+    outline: none;
+  }
 }

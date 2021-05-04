@@ -30,35 +30,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/_variables";
 @import "@/assets/styles/_mixins";
 
 .input-row {
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-  width: 100%;
+  @include input-row;
 
   label {
     margin-bottom: 0.35rem;
   }
 
   input {
-    @include transition;
-    font-family: inherit;
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    background-color: #fff;
-    border: solid 1px $dark;
-    border-radius: 4px;
-    height: 2rem;
-
-    &:focus-visible {
-      border-color: $light-blue;
-      box-shadow: 0 0 3px 1px $light-blue;
-      outline: none;
-    }
+    @include base-input;
   }
 }
 </style>
