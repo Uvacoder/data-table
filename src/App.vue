@@ -62,6 +62,7 @@
 <script>
 import Vue from "vue";
 import dataUsers from "@/api/index";
+import { v4 as uuidv4 } from "uuid";
 import { VTable, VButton, VModal, VInput, VInputTel } from "@/components";
 
 export default {
@@ -106,7 +107,7 @@ export default {
 
     addUser(userToAdd) {
       this.validateUser(userToAdd);
-      this.dataUsers.unshift({ ...userToAdd, id: this.dataUsers.length });
+      this.dataUsers.unshift({ ...userToAdd, id: uuidv4() });
     },
     editUser(userToEdit) {
       this.validateUser(userToEdit);
