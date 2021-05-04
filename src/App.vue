@@ -25,11 +25,11 @@
 
       <VTable class="v-table" :theadCols="theadCols">
         <template #tbody>
-          <tr v-if="!dataUsers.length">
+          <tr v-if="!users.length">
             <td colspan="3">No users found</td>
           </tr>
 
-          <tr v-for="user in dataUsers" :key="user.id">
+          <tr v-for="user in users" :key="user.id">
             <td>{{ user.name }}</td>
             <td>{{ user.phone }}</td>
             <td class="td-actions">
@@ -60,16 +60,13 @@
 </template>
 
 <script>
-import Vue from "vue";
-import dataUsers from "@/api/index";
-import { v4 as uuidv4 } from "uuid";
+import { mapMutations, mapState } from "vuex";
 import { VTable, VButton, VModal, VInput, VInputTel } from "@/components";
 
 export default {
   name: "App",
   components: { VTable, VButton, VModal, VInput, VInputTel },
   data: () => ({
-    dataUsers,
     addUserForm: { name: "", phone: "" },
     editUserForm: { name: "", phone: "" },
     theadCols: [
@@ -78,8 +75,13 @@ export default {
       { text: "Actions", align: "center", width: 100 },
     ],
   }),
+  computed: {
+    ...mapState(["users"]),
+  },
 
   methods: {
+    ...mapMutations(["addUser", "editUser", "removeUser"]),
+
     openModalUpdateUser(user) {
       this.$refs.modalUpdateUser.open();
       this.editUserForm = { ...user };
@@ -103,34 +105,6 @@ export default {
     },
     clearNewUserForm() {
       this.addUserForm = { name: "", phone: "" };
-    },
-
-    addUser(userToAdd) {
-      this.validateUser(userToAdd);
-      this.dataUsers.unshift({ ...userToAdd, id: uuidv4() });
-    },
-    editUser(userToEdit) {
-      this.validateUser(userToEdit);
-
-      const index = this.dataUsers.findIndex(
-        (user) => user.id === userToEdit.id
-      );
-      if (index !== -1) {
-        Vue.set(this.dataUsers, index, { ...userToEdit });
-      } else {
-        throw new Error("Unable to update, invalid user received");
-      }
-    },
-    removeUser(userToDelete) {
-      this.dataUsers = this.dataUsers.filter(
-        (user) => user.id !== userToDelete.id
-      );
-    },
-    validateUser(user) {
-      if (user.name.length < 3)
-        throw new Error("Invalid name, required at least 3 characters");
-      if (user.phone.length !== 14 && user.phone.length !== 15)
-        throw new Error("Invalid phone number format");
     },
   },
 };
