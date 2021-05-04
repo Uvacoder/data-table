@@ -3,18 +3,18 @@
     <h1 class="page-title">Users List</h1>
 
     <main>
-      <form @submit.prevent="addUser(newUserForm)" class="form-add">
+      <form @submit.prevent="submitFormAdd" class="form-add">
         <VInput
           label="Name"
-          id="name"
-          v-model="newUserForm.name"
+          id="addName"
+          v-model="addUserForm.name"
           placeholder="Ex: Lucas S."
         />
-        <VInput
+        <VInputTel
           label="Phone"
-          id="phone"
+          id="addPhone"
           placeholder="Ex: (##) #####-####"
-          v-model="newUserForm.phone"
+          v-model="addUserForm.phone"
         />
 
         <div class="btn-group">
@@ -44,9 +44,9 @@
     </main>
 
     <VModal ref="modalUpdateUser" title="Edit user">
-      <form @submit.prevent="submitForm" class="form-edit">
-        <VInput label="Name" id="name" v-model="userForm.name" />
-        <VInput label="Phone" id="phone" v-model="userForm.phone" />
+      <form @submit.prevent="submitFormEdit" class="form-edit">
+        <VInput label="Name" id="editName" v-model="editUserForm.name" />
+        <VInputTel label="Phone" id="editPhone" v-model="editUserForm.phone" />
 
         <div class="btn-group">
           <VButton variant="gray" @click="$refs.modalUpdateUser.close()">
@@ -62,15 +62,15 @@
 <script>
 import Vue from "vue";
 import dataUsers from "@/api/index";
-import { VTable, VButton, VModal, VInput } from "@/components";
+import { VTable, VButton, VModal, VInput, VInputTel } from "@/components";
 
 export default {
   name: "App",
-  components: { VTable, VButton, VModal, VInput },
+  components: { VTable, VButton, VModal, VInput, VInputTel },
   data: () => ({
     dataUsers,
-    newUserForm: { name: "", phone: "" },
-    userForm: { name: "", phone: "" },
+    addUserForm: { name: "", phone: "" },
+    editUserForm: { name: "", phone: "" },
     theadCols: [
       { text: "Name", width: 200 },
       { text: "Phone", width: 200 },
@@ -81,24 +81,36 @@ export default {
   methods: {
     openModalUpdateUser(user) {
       this.$refs.modalUpdateUser.open();
-      this.userForm = { ...user };
+      this.editUserForm = { ...user };
     },
-    submitForm() {
+    submitFormEdit() {
       try {
-        this.editUser(this.userForm);
+        this.editUser(this.editUserForm);
         this.$refs.modalUpdateUser.close();
         this.editUserForm = { name: "", phone: "" };
       } catch (error) {
         alert(error.message);
       }
     },
-    clearNewUserForm() {
-      this.newUserForm = { name: "", phone: "" };
+    submitFormAdd() {
+      try {
+        this.addUser(this.addUserForm);
+        this.addUserForm = { name: "", phone: "" };
+      } catch (error) {
+        alert(error.message);
+      }
     },
+    clearNewUserForm() {
+      this.addUserForm = { name: "", phone: "" };
+    },
+
     addUser(userToAdd) {
+      this.validateUser(userToAdd);
       this.dataUsers.unshift({ ...userToAdd, id: this.dataUsers.length });
     },
     editUser(userToEdit) {
+      this.validateUser(userToEdit);
+
       const index = this.dataUsers.findIndex(
         (user) => user.id === userToEdit.id
       );
@@ -112,6 +124,12 @@ export default {
       this.dataUsers = this.dataUsers.filter(
         (user) => user.id !== userToDelete.id
       );
+    },
+    validateUser(user) {
+      if (user.name.length < 3)
+        throw new Error("Invalid name, required at least 3 characters");
+      if (user.phone.length !== 14 && user.phone.length !== 15)
+        throw new Error("Invalid phone number format");
     },
   },
 };
@@ -129,7 +147,7 @@ export default {
 
   main {
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 700px;
     padding-bottom: 2rem;
   }
 

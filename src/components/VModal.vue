@@ -70,7 +70,6 @@ export default {
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 0 5px 0 #333;
-  user-select: text;
 
   header {
     display: flex;

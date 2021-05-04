@@ -4,25 +4,27 @@
     <div class="input-wrapper">
       <input
         :id="id"
-        type="text"
+        type="tel"
         :value="value"
         :placeholder="placeholder"
-        :autocomplete="autocomplete"
         @input="$emit('input', $event.target.value)"
+        v-mask="['(##) ####-####', '(##) #####-####']"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { mask } from "vue-the-mask";
+
 export default {
-  name: "VInput",
+  name: "VInputTel",
+  directives: { mask },
   props: {
     id: { type: String, required: true },
     value: { type: String, required: true },
     label: { type: String, default: "" },
     placeholder: { type: String, default: "" },
-    autocomplete: { type: String, default: "off" },
   },
 };
 </script>
