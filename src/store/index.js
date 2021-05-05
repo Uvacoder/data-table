@@ -31,7 +31,7 @@ const store = new Vuex.Store({
         throw new Error("Unable to update, invalid user received");
       }
     },
-    removeUser(state, userToDelete) {
+    deleteUser(state, userToDelete) {
       state.users = state.users.filter((user) => user.id !== userToDelete.id);
     },
   },

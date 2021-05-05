@@ -13,29 +13,41 @@
             <VButton variant="green" @click="openModalUpdateUser(user)">
               Edit
             </VButton>
-            <VButton variant="red" @click="removeUser(user)">Delete</VButton>
+            <VButton variant="red" @click="openModalDeleteUser(user)">
+              Delete
+            </VButton>
           </td>
         </tr>
       </template>
     </VTable>
 
     <VModal ref="modalUpdateUser" title="Edit user">
-      <form @submit.prevent="submitFormEdit" class="form-edit">
-        <VInput
-          ref="inputName"
-          label="Name"
-          id="editName"
-          v-model="userForm.name"
-        />
+      <form @submit.prevent="submitFormEdit" class="form-modal-edit">
+        <VInput label="Name" id="editName" v-model="userForm.name" />
         <VInputTel label="Phone" id="editPhone" v-model="userForm.phone" />
 
-        <div class="btn-group">
+        <div class="modal-btn-group">
           <VButton variant="gray" @click="$refs.modalUpdateUser.close()">
             Cancel
           </VButton>
           <VButton type="submit">Save</VButton>
         </div>
       </form>
+    </VModal>
+
+    <VModal ref="modalDeleteUser" title="Delete user" minWidth="400px">
+      <div class="div-modal-delete">
+        <p>
+          Are you sure want to delete the user <b>{{ userForm.name }}</b> ?
+        </p>
+
+        <div class="modal-btn-group">
+          <VButton variant="gray" @click="$refs.modalDeleteUser.close()">
+            Cancel
+          </VButton>
+          <VButton variant="red" @click="confirmDeleteUser">Confirm</VButton>
+        </div>
+      </div>
     </VModal>
   </div>
 </template>
@@ -59,19 +71,29 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["editUser", "removeUser"]),
+    ...mapMutations(["editUser", "deleteUser"]),
 
     openModalUpdateUser(user) {
       this.userForm = { ...user };
       this.$refs.modalUpdateUser.open();
-      this.$nextTick(() => {
-        this.$refs.inputName.focus();
-      });
+    },
+    openModalDeleteUser(user) {
+      this.userForm = { ...user };
+      this.$refs.modalDeleteUser.open();
     },
     submitFormEdit() {
       try {
         this.editUser(this.userForm);
         this.$refs.modalUpdateUser.close();
+        this.userForm = { name: "", phone: "" };
+      } catch (error) {
+        alert(error.message);
+      }
+    },
+    confirmDeleteUser() {
+      try {
+        this.deleteUser(this.userForm);
+        this.$refs.modalDeleteUser.close();
         this.userForm = { name: "", phone: "" };
       } catch (error) {
         alert(error.message);
@@ -91,18 +113,24 @@ export default {
     gap: 1rem;
   }
 
-  .form-edit {
+  .form-modal-edit {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
 
-    .btn-group {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      padding: 1rem 0 0 0;
-      border-top: $grey 1px solid;
-    }
+  .div-modal-delete {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .modal-btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1rem 0 0 0;
+    border-top: $grey 1px solid;
   }
 }
 </style>

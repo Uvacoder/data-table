@@ -3,9 +3,9 @@
     <div v-if="isOpen">
       <div class="modal-overlay" @click.stop="close"></div>
 
-      <div class="modal" @click.stop>
+      <div class="modal" :style="{ minWidth: minWidth }" @click.stop>
         <header>
-          <h2>{{ title }}</h2>
+          <h2 class="title">{{ title }}</h2>
 
           <button class="btn-close" @click="close">
             <font-awesome-icon class="times-icon" :icon="['fas', 'times']" />
@@ -25,6 +25,7 @@ export default {
   name: "VModal",
   props: {
     title: { type: String, default: "" },
+    minWidth: { type: String, default: "450px" },
   },
   data: () => ({
     isOpen: false,
@@ -66,7 +67,6 @@ export default {
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  min-width: 500px;
   padding: 1rem 1.5rem;
   background-color: #fff;
   border-radius: 4px;
@@ -78,8 +78,11 @@ export default {
     align-items: center;
     margin-bottom: 1rem;
     padding: 0.3rem 0;
-    font-size: 1.2em;
     border-bottom: $grey 1px solid;
+
+    .title {
+      font-size: 1.5rem;
+    }
   }
 
   header .btn-close {
