@@ -25,15 +25,16 @@ export default {
 @import "@/assets/styles/_variables";
 
 .page-wrapper {
+  margin: 0 auto;
+  max-width: 750px;
+
   .page-title {
     padding: 0.5rem 0;
-    border-bottom: $grey 1px solid;
     margin-bottom: 1rem;
+    border-bottom: $dark-grey 1px solid;
   }
 
   main {
-    margin: 0 auto;
-    max-width: 750px;
     padding: 0 1rem;
     padding-bottom: 2rem;
   }

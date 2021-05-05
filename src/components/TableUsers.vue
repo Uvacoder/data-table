@@ -15,9 +15,10 @@
           <td>{{ user.phone }}</td>
           <td class="td-actions">
             <VButton variant="green" @click="openModalUpdateUser(user)">
-              Edit
+              <font-awesome-icon :icon="['fas', 'edit']" /> Edit
             </VButton>
             <VButton variant="red" @click="openModalDeleteUser(user)">
+              <font-awesome-icon :icon="['fas', 'trash']" />
               Delete
             </VButton>
           </td>
@@ -143,7 +144,7 @@ export default {
     justify-content: flex-end;
     gap: 1rem;
     padding: 1rem 0 0 0;
-    border-top: $grey 1px solid;
+    border-top: $dark-grey 1px solid;
   }
 }
 </style>

@@ -1,33 +1,40 @@
 <template>
-  <form @submit.prevent="submitFormAdd" class="form-add">
-    <VInput
-      ref="inputName"
-      label="Name"
-      id="addName"
-      v-model="userForm.name"
-      placeholder="Ex: Lucas Santos"
-    />
-    <VInputTel
-      label="Phone"
-      id="addPhone"
-      placeholder="Ex: (##) #####-####"
-      v-model="userForm.phone"
-    />
+  <section class="wrapper">
+    <VButton @click="$refs.modalAddUser.open()">
+      <font-awesome-icon :icon="['fas', 'plus']" /> Add new user
+    </VButton>
 
-    <div class="btn-group">
-      <VButton type="submit">Add</VButton>
-      <VButton variant="gray" @click="clearUserForm">Clear</VButton>
-    </div>
-  </form>
+    <VModal ref="modalAddUser" title="Add new user">
+      <form @submit.prevent="submitFormAdd" class="form-modal-add">
+        <VInput
+          label="Name"
+          id="addName"
+          v-model="userForm.name"
+          placeholder="Ex: Lucas Santos"
+        />
+        <VInputTel
+          label="Phone"
+          id="addPhone"
+          v-model="userForm.phone"
+          placeholder="Ex: (##) #####-####"
+        />
+
+        <div class="modal-btn-group">
+          <VButton variant="gray" @click="closeModalAddUser">Cancel</VButton>
+          <VButton type="submit">Add</VButton>
+        </div>
+      </form>
+    </VModal>
+  </section>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
-import { VButton, VInput, VInputTel } from "@/components/ui";
+import { VModal, VButton, VInput, VInputTel } from "@/components/ui";
 
 export default {
   name: "FormAddUser",
-  components: { VButton, VInput, VInputTel },
+  components: { VModal, VButton, VInput, VInputTel },
   data: () => ({
     userForm: { name: "", phone: "" },
   }),
@@ -38,15 +45,17 @@ export default {
     submitFormAdd() {
       try {
         this.addUser(this.userForm);
-        this.clearUserForm();
-        this.$refs.inputName.focus();
+        this.closeModalAddUser();
       } catch (error) {
         alert(error.message);
       }
     },
+    closeModalAddUser() {
+      this.$refs.modalAddUser.close();
+      this.clearUserForm();
+    },
     clearUserForm() {
       this.userForm = { name: "", phone: "" };
-      this.$refs.inputName.focus();
     },
   },
 };
@@ -55,16 +64,23 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/_mixins";
 
-.form-add {
+.wrapper {
   display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
 
-  .btn-group {
+  .form-modal-add {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    flex-direction: column;
     gap: 1rem;
+
+    .modal-btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding: 1rem 0 0 0;
+      border-top: $dark-grey 1px solid;
+    }
   }
 
   @include on-screen-xs {

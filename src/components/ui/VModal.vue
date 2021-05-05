@@ -78,7 +78,7 @@ export default {
     align-items: center;
     margin-bottom: 1rem;
     padding: 0.3rem 0;
-    border-bottom: $grey 1px solid;
+    border-bottom: $dark-grey 1px solid;
 
     .title {
       font-size: 1.5rem;

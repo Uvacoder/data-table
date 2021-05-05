@@ -55,8 +55,6 @@ export default {
     border-bottom: solid 2px $clr-table-border;
 
     th {
-      position: sticky;
-      top: -1px;
       padding: 0.75rem 0.5rem;
       text-transform: uppercase;
       letter-spacing: 1px;
