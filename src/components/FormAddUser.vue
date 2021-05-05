@@ -53,6 +53,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/_mixins";
+
 .form-add {
   display: flex;
   gap: 1.5rem;
@@ -63,6 +65,11 @@ export default {
     justify-content: flex-end;
     align-items: flex-end;
     gap: 1rem;
+  }
+
+  @include on-screen-xs {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }
 </style>

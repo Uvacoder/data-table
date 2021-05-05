@@ -106,5 +106,10 @@ export default {
   main {
     flex: 1;
   }
+
+  @include on-screen-xs {
+    min-width: auto;
+    width: calc(100% - 1rem);
+  }
 }
 </style>

@@ -1,5 +1,11 @@
 @import "_variables";
 
+@mixin on-screen-xs {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
 @mixin flex-center {
   display: flex;
   justify-content: center;

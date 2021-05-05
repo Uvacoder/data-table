@@ -31,7 +31,8 @@ export default {
 
   main {
     margin: 0 auto;
-    max-width: 700px;
+    max-width: 750px;
+    padding: 0 1rem;
     padding-bottom: 2rem;
   }
 }

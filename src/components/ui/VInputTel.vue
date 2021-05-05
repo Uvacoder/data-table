@@ -7,6 +7,7 @@
         type="tel"
         :value="value"
         :placeholder="placeholder"
+        :autocomplete="autocomplete"
         @input="$emit('input', $event.target.value)"
         v-mask="['(##) ####-####', '(##) #####-####']"
       />
@@ -25,6 +26,7 @@ export default {
     value: { type: String, required: true },
     label: { type: String, default: "" },
     placeholder: { type: String, default: "" },
+    autocomplete: { type: String, default: "off" },
   },
 };
 </script>
