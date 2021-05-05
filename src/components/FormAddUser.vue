@@ -5,7 +5,7 @@
       label="Name"
       id="addName"
       v-model="userForm.name"
-      placeholder="Ex: Lucas S."
+      placeholder="Ex: Lucas Santos"
     />
     <VInputTel
       label="Phone"

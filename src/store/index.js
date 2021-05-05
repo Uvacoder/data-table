@@ -6,10 +6,16 @@ import dataUsers from "@/api/index";
 Vue.use(Vuex);
 
 function validateUser(user) {
-  if (user.name.length < 3)
-    throw new Error("Invalid name, required at least 3 characters");
-  if (user.phone.length !== 14 && user.phone.length !== 15)
+  const nameWords = user.name.split(" ");
+  if (!nameWords[1]) {
+    throw new Error("Invalid name, required at least 2 words");
+  }
+  if (nameWords[0].length < 3 || nameWords[1].length < 3) {
+    throw new Error("Invalid name, each word required at least 3 characters");
+  }
+  if (user.phone.length !== 15) {
     throw new Error("Invalid phone number format");
+  }
 }
 
 const store = new Vuex.Store({

@@ -1,12 +1,14 @@
 <template>
-  <div class="page-wrapper">
-    <h1 class="page-title">Users List</h1>
+  <transition name="fade-transition" appear>
+    <div class="page-wrapper">
+      <h1 class="page-title">Users List</h1>
 
-    <main>
-      <FormAddUser />
-      <TableUsers />
-    </main>
-  </div>
+      <main>
+        <FormAddUser />
+        <TableUsers />
+      </main>
+    </div>
+  </transition>
 </template>
 
 <script>

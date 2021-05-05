@@ -9,7 +9,7 @@
         :placeholder="placeholder"
         :autocomplete="autocomplete"
         @input="$emit('input', $event.target.value)"
-        v-mask="['(##) ####-####', '(##) #####-####']"
+        v-mask="'(##) #####-####'"
       />
     </div>
   </div>

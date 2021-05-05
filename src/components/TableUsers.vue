@@ -6,7 +6,11 @@
           <td colspan="3">No users found</td>
         </tr>
 
-        <tr v-for="user in users" :key="user.id">
+        <tr
+          v-for="user in users"
+          :key="user.id"
+          :class="{ 'row-highlight': checkPhonePrefix(user.phone) }"
+        >
           <td>{{ user.name }}</td>
           <td>{{ user.phone }}</td>
           <td class="td-actions">
@@ -99,6 +103,9 @@ export default {
         alert(error.message);
       }
     },
+    checkPhonePrefix(phone) {
+      return phone.includes("(11)");
+    },
   },
 };
 </script>
@@ -107,10 +114,16 @@ export default {
 @import "@/assets/styles/_variables";
 
 .wrapper {
-  .v-table .td-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+  .v-table {
+    .td-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .row-highlight {
+      background-color: #3d9df240 !important;
+    }
   }
 
   .form-modal-edit {
