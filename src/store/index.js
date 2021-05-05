@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 Vue.use(Vuex);
 
 function validateUser(user) {
-  const nameWords = user.name.split(" ");
+  const nameWords = user.name.replace(/\s\s+/g, " ").split(" ");
   if (!nameWords[1]) {
     throw new Error("Invalid name, required at least 2 words");
   }
