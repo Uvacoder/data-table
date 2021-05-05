@@ -12,12 +12,20 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+import dataUsers from "@/api/index";
 import FormAddUser from "@/components/FormAddUser";
 import TableUsers from "@/components/TableUsers";
 
 export default {
   name: "App",
   components: { FormAddUser, TableUsers },
+  created() {
+    this.setUsers(dataUsers);
+  },
+  methods: {
+    ...mapMutations(["setUsers"]),
+  },
 };
 </script>
 

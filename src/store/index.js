@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { v4 as uuidv4 } from "uuid";
-import dataUsers from "@/api/index";
 
 Vue.use(Vuex);
 
@@ -20,9 +19,12 @@ function validateUser(user) {
 
 const store = new Vuex.Store({
   state: {
-    users: dataUsers,
+    users: [],
   },
   mutations: {
+    setUsers(state, users) {
+      state.users = users;
+    },
     addUser(state, userToAdd) {
       validateUser(userToAdd);
       state.users.unshift({ ...userToAdd, id: uuidv4() });
