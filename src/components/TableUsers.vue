@@ -40,10 +40,10 @@
       </form>
     </VModal>
 
-    <VModal ref="modalDeleteUser" title="Delete user" minWidth="400px">
+    <VModal ref="modalDeleteUser" title="Delete user">
       <div class="div-modal-delete">
         <p>
-          Are you sure want to delete the user <b>{{ userForm.name }}</b> ?
+          Are you sure you want to delete the user <b>{{ userForm.name }}</b> ?
         </p>
 
         <div class="modal-btn-group">

@@ -4,7 +4,7 @@
       <h1 class="page-title">Users List</h1>
 
       <main>
-        <FormAddUser />
+        <SectionAddUser />
         <TableUsers />
       </main>
     </div>
@@ -14,12 +14,12 @@
 <script>
 import { mapMutations } from "vuex";
 import dataUsers from "@/api/index";
-import FormAddUser from "@/components/FormAddUser";
+import SectionAddUser from "@/components/SectionAddUser";
 import TableUsers from "@/components/TableUsers";
 
 export default {
   name: "App",
-  components: { FormAddUser, TableUsers },
+  components: { SectionAddUser, TableUsers },
   created() {
     this.setUsers(dataUsers);
   },

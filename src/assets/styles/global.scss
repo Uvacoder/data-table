@@ -11,8 +11,8 @@
   opacity: 0;
 }
 
-body {
+html {
   @include on-screen-xs {
-    font-size: 14px;
+    font-size: 13px;
   }
 }

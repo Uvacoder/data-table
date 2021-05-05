@@ -1,9 +1,9 @@
 <template>
   <transition name="fade-transition">
-    <div v-if="isOpen">
+    <div v-if="isOpen" class="wrapper">
       <div class="modal-overlay" @click.stop="close"></div>
 
-      <div class="modal" :style="{ minWidth: minWidth }" @click.stop>
+      <div class="modal" @click.stop>
         <header>
           <h2 class="title">{{ title }}</h2>
 
@@ -25,7 +25,6 @@ export default {
   name: "VModal",
   props: {
     title: { type: String, default: "" },
-    minWidth: { type: String, default: "450px" },
   },
   data: () => ({
     isOpen: false,
@@ -46,20 +45,23 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/_variables";
 @import "@/assets/styles/_mixins";
-
-.modal-overlay {
+.wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #2e2e2e4f;
-  user-select: none;
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #2e2e2e4f;
+    user-select: none;
+  }
 }
 
-.modal {
+.wrapper .modal {
   position: fixed;
   z-index: 15;
   top: 40%;
@@ -67,6 +69,8 @@ export default {
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 450px;
   padding: 1rem 1.5rem;
   background-color: #fff;
   border-radius: 4px;
@@ -111,7 +115,6 @@ export default {
   }
 
   @include on-screen-xs {
-    min-width: auto;
     width: calc(100% - 1rem);
   }
 }
